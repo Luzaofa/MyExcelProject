@@ -37,25 +37,40 @@ class MainService(object):
         judge_value = ''
 
         if file_type == 'type1':
-            judge_value = 'Luzaofa'
+            judge_value = 'XXX'
 
-        if file_type == 'type2':
+        elif file_type == 'type2':
             judge_col = 2
-            judge_value = '卢造发'
+            judge_value = 'YYY'
+
+        elif file_type == 'type3':
+            judge_col = 2
+            judge_value = 'ZZZ'
+
+        else:
+            pass
 
         col_values = self.excelhelper.get_col_values(judge_col)
         row = 1
         for col in col_values:
             try:
-                if judge_value in str(col[0]):
+                if judge_value in col[0]:
                     mass = {}
                     for key, value in config.items():
                         values = self.excelhelper.get_cell_value(row, value)
+                        if ',' in str(values):
+                            values = values.replace(',', '')
                         mass[key] = values
                     print(mass)
                 row += 1
             except:
                 row += 1
+
+        # try:
+        #     self.dbhelper.create_table()
+        #     self.dbhelper.create_table2()
+        # except:
+        #     pass
 
         self.excelhelper.close()
         return True
@@ -92,9 +107,12 @@ def kill_process():
 
 if __name__ == '__main__':
 
-    path = 'XXX/ExcelProject/Files/'  # 本地文件夹
-    move_path = 'XXX/ExcelProject/DealFiles/'  # 处理后移除文件夹
-    log_path = 'XXX/ExcelProject/log.txt'  # 日志
+    # path = "//127.0.0.1/Data/"  # 服务器文件夹路径（正式）
+    # deal_path = '//127.0.0.1/DealFiles/'  # 处理后移除文件夹
+    # log_path = '//127.0.0.1/DealFiles/'    # 日志
+    path = 'E:/MyExcelProject/Files/'  # 本地文件夹（测试）
+    move_path = 'E:/MyExcelProject/DealFiles/'  # 处理后移除文件夹
+    log_path = 'E:/MyExcelProject/log.txt'  # 日志
 
     while True:
         deal_file = []
